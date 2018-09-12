@@ -104,7 +104,7 @@ class Gitlab::Client
     # @param  [String] tag The name of the tag (wildcard can be used).
     # @param  [Hash] options A customizable set of options.
     # @option options [Integer] :create_access_level Level Access levels allowed to create (default = 40)
-    # @return [Gitlab::ObjectifiedHash] Details about the branch
+    # @return [Gitlab::ObjectifiedHash] Details about the tag
     def protect_tag(project, branch, options = {})
       post("/projects/#{url_encode project}/protected_tags", body: {name: tag, create_access_level: 40}.merge(options))
     end
