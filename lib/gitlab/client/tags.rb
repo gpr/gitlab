@@ -93,5 +93,21 @@ class Gitlab::Client
       put("/projects/#{url_encode project}/repository/tags/#{url_encode tag}/release", body: { description: description })
     end
     alias repo_update_release update_release
+    
+    # Protects a repository tag.
+    #
+    # @example
+    #   Gitlab.protect_tag(3, 'v*')
+    #   Gitlab.repo_protect_tag(5, 'v1.0.0')
+    #
+    # @param  [Integer, String] project The ID or name of a project.
+    # @param  [String] tag The name of the tag (wildcard can be used).
+    # @param  [Hash] options A customizable set of options.
+    # @option options [Integer] :create_access_level Level Access levels allowed to create (default = 40)
+    # @return [Gitlab::ObjectifiedHash] Details about the branch
+    def protect_tag(project, branch, options = {})
+      post("/projects/#{url_encode project}/protected_tags", body: {name: tag, create_access_level: 40}.merge(options))
+    end
+    alias_method :repo_protect_tag, :protect_tag
   end
 end
